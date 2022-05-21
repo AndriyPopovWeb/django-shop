@@ -6,6 +6,7 @@
 
 {% block content %}
 <h2>{{ product.name }}</h2>
+<input type="hidden" id="productId" value="{{ product.id }}">
 <div class="row">
     <div class="col-md-6 my-3">
         <div class="card h-100">
@@ -35,7 +36,7 @@
                 </button>
             </div>
             <div class="card-body">
-                <h2 class="card-text">{{ product.name }}</h2>
+                <button class="btn btn-success" id="btn-buy"> Buy it</button>
             </div>
         </div>
     </div>
@@ -76,4 +77,23 @@
         </div>
     </div>
 </div>
+<script>
+    const btnBuy = document.getElementById('btn-buy');
+    const productId = document.getElementById('productId').value;
+    btnBuy.addEventListener('click', async (event) => {
+        let result = 0;
+        await fetch(`/product-amount/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                result = data;
+            });
+        /* if amount of product > cart[productId] */
+        let cart;
+        if (!localStorage.getItem('cart')) cart = {};
+        else cart = JSON.parse(localStorage.getItem('cart'));
+        if (cart[productId]) cart[productId]++;
+        else cart[productId] = 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+    });
+</script>
 {% endblock content %}

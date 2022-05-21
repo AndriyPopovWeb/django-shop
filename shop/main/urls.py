@@ -10,6 +10,7 @@ urlpatterns = [
     path('categories/<str:name>', category_controller, name='categories'),
     path('product/<int:id>', product_controller, name='product'),
     path('comment/<int:id>', comment_controller, name='comment'),
+    path('product-amount/<int:id>', product_amount_controller, name='productamount'),
     # account-paths
     path('account/login', LoginView.as_view(), name='login'),
     path('account/registration', RegistrationView.as_view(), name='registration'),

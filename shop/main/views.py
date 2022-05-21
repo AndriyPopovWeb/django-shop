@@ -1,4 +1,5 @@
 from functools import wraps
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
@@ -98,5 +99,14 @@ def product_controller(request, id: int):
 
 def comment_controller(request, id: int):
     if request.method == 'POST':
-        print(request.POST)
+        response = Response()
+        response.text = request.POST.get('text')
+        response.user = request.user
+        response.product = Product.objects.get(id=id)
+        response.save()
     return redirect('main:product', id=id)
+
+
+def product_amount_controller(request, id: int):
+    amount = Product.objects.get(id=id).amount
+    return HttpResponse(amount)
