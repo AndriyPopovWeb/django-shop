@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Registration</title>
+{% endblock head %}
+
+{% block content %}
+<form action="{% url 'main:registration' %}" method="post">
+    {% csrf_token %}
+
+    <div class="form-outline my-2">
+        {{ form.username }}
+    </div>
+    
+    {% if form.username.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ form.username.errors }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="form-outline my-2">
+        {{ form.email }}
+    </div>
+    
+    {% if form.email.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ form.email.errors }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="form-outline my-2">
+        {{ form.password1 }}
+    </div>
+    
+    {% if form.password1.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ form.password1.errors }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <div class="form-outline my-2">
+        {{ form.password2 }}
+    </div>
+    
+    {% if form.password2.errors %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ form.password2.errors }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary btn-block my-2">Submit</button>
+</form>
+{% endblock content %}

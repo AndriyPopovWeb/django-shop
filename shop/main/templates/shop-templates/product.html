@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>{{ product.name }}</title>
+{% endblock head %}
+
+{% block content %}
+<h2>{{ product.name }}</h2>
+<div class="row">
+    <div class="col-md-6 my-3">
+        <div class="card h-100">
+            <div id="carousel{{ product.id }}" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for img in product.images.all %}
+                    {% if forloop.first %}
+                    <div class="carousel-item active">
+                        <img src="{{ img.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    </div>
+                    {% else %}
+                    <div class="carousel-item">
+                        <img src="{{ img.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ product.id }}"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ product.id }}"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="card-body">
+                <h2 class="card-text">{{ product.name }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 my-3">
+        <div class="h-100">
+            {{ product.description|safe }}
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card shadow-0 border" style="background-color: lightgray;">
+                <div class="card-body p-4">
+                    <form method="post" action="{% url 'main:comment' product.id %}" class="form-outline mb-3">
+                        {% csrf_token %}
+                        <input type="text" name="text" class="form-control" placeholder="Type response..." />
+                    </form>
+
+                    {% for response in responses %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <p>{{ response.text }}</p>
+
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                    <p class="small mb-0 ms-2"><i>{{ response.user }}</i></p>
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                    <p class="small text-muted mb-0">{{ response.date }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

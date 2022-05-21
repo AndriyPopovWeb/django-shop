@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login</title>
+{% endblock head %}
+
+{% block content %}
+<form action="{% url 'main:login' %}" method="post">
+    {% csrf_token %}
+
+    <div class="form-outline my-2">
+        {{ form.username }}
+    </div>
+
+    <div class="form-outline my-2">
+        {{ form.password }}
+    </div>
+    
+    {% if form.non_field_errors  %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ form.non_field_errors  }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary btn-block my-2">Submit</button>
+</form>
+{% endblock content %}
