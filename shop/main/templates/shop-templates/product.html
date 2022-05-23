@@ -78,6 +78,7 @@
     </div>
 </div>
 <script>
+    {% comment %} 16 : 00 {% endcomment %}
     const btnBuy = document.getElementById('btn-buy');
     const productId = document.getElementById('productId').value;
     btnBuy.addEventListener('click', async (event) => {
@@ -94,6 +95,8 @@
         if (cart[productId]) cart[productId]++;
         else cart[productId] = 1;
         localStorage.setItem('cart', JSON.stringify(cart));
+        update();
     });
 </script>
 {% endblock content %}
+{% comment %} 16:40 {% endcomment %}

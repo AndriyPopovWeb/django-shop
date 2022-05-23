@@ -58,7 +58,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'main:registration' %}">Registration</a>
                     </li>
+                    
+
                     {% endif %}
+                    <li class="nav-item">
+                        <a id="cart-items-count" href="#" class="nav-link"></a>
+                    </li>
+                    <p><a href="/cart"><img src="/media/images/cart.png" width="90" 
+                        height="50" border="0" alt="Пример"></a></p>
+            
                 </ul>
             </div>
         </div>
@@ -76,6 +84,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
-</body>
-
-</html>
+    <script>
+        {% comment %} 16:40 {% endcomment %}
+        function update() {
+            count = 0
+            for (var i = 0; i < Object.values(JSON.parse(localStorage.getItem('cart'))).length; i++) {
+                count += Object.values(JSON.parse(localStorage.getItem('cart')))[i];
+            };
+            var counttext = document.getElementById('cart-items-count');
+            counttext.innerHTML = '<a id="cart-items-count" href="#" class="nav-link">'+count+' товарів</a>';
+            console.log(count);
+        }
+        {% comment %} 17:00 {% endcomment %}
+        var count = 0;
+        for (var i = 0; i < Object.values(JSON.parse(localStorage.getItem('cart'))).length; i++) {
+            count += Object.values(JSON.parse(localStorage.getItem('cart')))[i];
+        };
+        var counttext = document.getElementById('cart-items-count');
+        counttext.innerHTML = '<a id="cart-items-count" href="#" class="nav-link">'+count+' товарів</a>';
+        console.log(count);
+    </script>
+{% comment %} 17:30 {% endcomment %}
+{% comment %} кращого експерта з джаваскріпта нема на світі {% endcomment %}

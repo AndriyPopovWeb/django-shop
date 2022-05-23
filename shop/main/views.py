@@ -1,10 +1,10 @@
 from functools import wraps
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
 
-from .models import Category, Product, Response
+from .models import Category, Image, Product, Response
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
 
 # Create your views here.
@@ -96,6 +96,8 @@ def product_controller(request, id: int):
     responses = Response.objects.filter(product=product).order_by('-date')
     return render(request, 'shop-templates/product.html', {**request.data, 'product': product, 'responses': responses})
 
+def cart_controller(request):
+    return render(request, 'shop-templates/cart.html', {'product': Product.objects.all()})
 
 def comment_controller(request, id: int):
     if request.method == 'POST':
@@ -110,3 +112,13 @@ def comment_controller(request, id: int):
 def product_amount_controller(request, id: int):
     amount = Product.objects.get(id=id).amount
     return HttpResponse(amount)
+#18:48
+def getdescription(request, id):
+    return HttpResponse(Product.objects.get(id=id).description)
+def getimage(request, id):
+    print(Image.objects.filter(product__in=[id]).distinct()[0].image.url)
+    return HttpResponse(Image.objects.filter(product__in=[id]).distinct()[0].image.url)
+def getname(request, id):
+    return HttpResponse(Product.objects.get(id=id).name)
+def getprice(request, id):
+    return HttpResponse(Product.objects.get(id=id).price)
