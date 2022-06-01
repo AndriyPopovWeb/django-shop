@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Cart</title>
+{% endblock head %}
+
+{% block content %}
+<div id="productsContainer"></div>
+<div class="container text-end">
+    <h3 id="cost"></h3>
+    <div>
+        <a href="#" class="btn btn-success">Buy it!</a>
+    </div>
+</div>
+<script>
+    const cartObj = JSON.parse(localStorage.getItem('cart'));
+    let cost = 0;
+    const container = document.getElementById('productsContainer');
+    container.innerHTML = `<div class="container justify-content-center">`;
+    for (const key in cartObj) {
+        fetch(`/get-product/${key}`)
+            .then((response) => { return response.json() })
+            .then((data) => {
+                cost += cartObj[key] * data['price'];
+                container.innerHTML += `
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="${data['imageURL']}" class="img-fluid rounded-start" alt="${data['name']}" style="max-height: 150px;">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body">
+                                <h5 class="card-title">${data['name']}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                document.getElementById('cost').innerHTML = `${cost} &#8372;`;
+            });
+    }
+    container.innerHTML += `</div>`;
+</script>
+{% endblock content %}

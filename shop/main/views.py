@@ -1,5 +1,5 @@
 from functools import wraps
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
@@ -110,3 +110,17 @@ def comment_controller(request, id: int):
 def product_amount_controller(request, id: int):
     amount = Product.objects.get(id=id).amount
     return HttpResponse(amount)
+
+
+def get_product_controller(request, id):
+    result = Product.objects.get(id=id)
+    return JsonResponse({
+        'name': result.name,
+        'price': result.price,
+        'imageURL': result.images.all()[0].image.url
+    })
+
+
+@add_categories
+def cart_controller(request):
+    return render(request, 'shop-templates/cart.html', {**request.data})
