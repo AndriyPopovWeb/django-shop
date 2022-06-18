@@ -2,6 +2,38 @@
 
 {% block head %}
 <title>Cart</title>
+<style>
+    #wfpBtn {
+        display: inline-block !important;
+        background: #2B3160 url('https://s3.eu-central-1.amazonaws.com/w4p-merch/button/bg3x2.png') no-repeat center right;
+        background-size: cover;
+        width: 256px !important;
+        height: 54px !important;
+        border: 2px solid #ffffff !important;
+        border-radius: 14px !important;
+        padding: 18px !important;
+        box-shadow: 3px 2px 8px rgba(71, 66, 66, 0.22) !important;
+        text-align: left !important;
+        box-sizing: border-box !important;
+    }
+
+    #wfpBtn:hover {
+        opacity: 0.8;
+    }
+
+    #wfpBtn:not(:hover) {
+        opacity: 1;
+    }
+
+    #wfpSpan {
+        font-family: Verdana, Arial, sans-serif !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+        color: #ffffff !important;
+        line-height: 18px !important;
+        vertical-align: middle !important;
+    }
+</style>
 {% endblock head %}
 
 {% block content %}
@@ -9,9 +41,61 @@
 <div class="container text-end">
     <h3 id="cost"></h3>
     <div>
-        <a href="#" class="btn btn-success">Buy it!</a>
+        <button type="button" id="wfpBtn">
+            <span id="wfpSpan">Buy it!</span>
+        </button>
     </div>
 </div>
+
+<script type="text/javascript" id="widget-wfp-script" src="https://secure.wayforpay.com/server/pay-widget.js"></script>
+
+<!-- <script type="text/javascript">
+    function runWfpWdgt(url) {
+        let wayforpay = new Wayforpay();
+        wayforpay.invoice(url, true);
+    }
+    document.getElementById("wfpBtn").addEventListener('click', (event) => {
+        runWfpWdgt('https://secure.wayforpay.com/button/b61d27bf3a9db');
+    });
+</script> -->
+
+<script>
+    let wayforpay = new Wayforpay();
+    let pay = function () {
+        wayforpay.run({
+            merchantAccount: "shop_shop",
+            merchantDomainName: "shop.shop",
+            authorizationType: "SimpleSignature",
+            merchantSignature: "b95932786cbe243a76b014846b63fe92",
+            orderReference: "DH783023",
+            orderDate: "1415379863",
+            amount: "1547.36",
+            currency: "UAH",
+            productName: "Процессор Intel Core i5-4670 3.4GHz",
+            productPrice: "1000",
+            productCount: "1",
+            clientFirstName: "Вася",
+            clientLastName: "Васечкин",
+            clientEmail: "some@mail.com",
+            clientPhone: "380631234567",
+            language: "UA"
+        },
+            function (response) {
+                // on approved
+            },
+            function (response) {
+                // on declined
+            },
+            function (response) {
+                // on pending or in processing
+            }
+        );
+    }
+    document.getElementById("wfpBtn").addEventListener('click', (event) => {
+        pay();
+    });
+</script>
+
 <script>
     const cartObj = JSON.parse(localStorage.getItem('cart'));
     let cost = 0;
