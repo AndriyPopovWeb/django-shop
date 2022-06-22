@@ -61,12 +61,18 @@
 
 <script>
     let wayforpay = new Wayforpay();
+    
+    let signature;
+    fetch(`/get-signature`)
+        .then(response => response.json())
+        .then(data => { signature = data.signature; })
+
     let pay = function () {
         wayforpay.run({
             merchantAccount: "shop_shop",
             merchantDomainName: "shop.shop",
             authorizationType: "SimpleSignature",
-            merchantSignature: "b95932786cbe243a76b014846b63fe92",
+            merchantSignature: signature,
             orderReference: "DH783023",
             orderDate: "1415379863",
             amount: "1547.36",

@@ -124,3 +124,19 @@ def get_product_controller(request, id):
 @add_categories
 def cart_controller(request):
     return render(request, 'shop-templates/cart.html', {**request.data})
+
+
+def get_signature_controller(request):
+    key = 'dbe834d347dcbc3886c3372e492c38e0ca5e6ca9'
+    import hmac
+    def hmac_md5(key, s):
+        return hmac.new(key.encode('utf-8'), s.encode('utf-8'), 'MD5').hexdigest()
+    value = 'shop_shop;shop.shop;' + \
+        'DH783023;1415379863;' + \
+        '1547.36;UAH;' + \
+        'Процессор Intel Core i5-4670 3.4GHz;Память Kingston DDR3-1600 4096MB PC3-12800;1;1;1000;547.36'
+    signature = hmac_md5(key, value)
+    print(signature)
+    return JsonResponse({
+        'signature': signature
+    })
