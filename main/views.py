@@ -1,8 +1,14 @@
+import json
 from functools import wraps
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import login, logout
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+
+import stripe
 
 from .models import Category, Product, Response
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
@@ -123,20 +129,42 @@ def get_product_controller(request, id):
 
 @add_categories
 def cart_controller(request):
-    return render(request, 'shop-templates/cart.html', {**request.data})
+    return render(request, 'shop-templates/cart.html', {**request.data, 'stripe_publishable_key': settings.STRIPE_PUBLISHABLE_KEY})
 
 
-def get_signature_controller(request):
-    key = 'dbe834d347dcbc3886c3372e492c38e0ca5e6ca9'
-    import hmac
-    def hmac_md5(key, s):
-        return hmac.new(key.encode('utf-8'), s.encode('utf-8'), 'MD5').hexdigest()
-    value = 'shop_shop;shop.shop;' + \
-        'DH783023;1415379863;' + \
-        '1547.36;UAH;' + \
-        'Процессор Intel Core i5-4670 3.4GHz;Память Kingston DDR3-1600 4096MB PC3-12800;1;1;1000;547.36'
-    signature = hmac_md5(key, value)
-    print(signature)
-    return JsonResponse({
-        'signature': signature
-    })
+@csrf_exempt
+def create_checkout_session(request):
+    request_data = json.loads(request.body)
+    items = []
+    for id, count in request_data.items():
+        p = Product.objects.get(id=id)
+        items.append({
+            'price_data': {
+                'currency': 'uah',
+                'product_data': {
+                    'name': p.name,
+                },
+                'unit_amount': int(p.price * 100),
+            },
+            'quantity': count,
+        })
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=items,
+        mode='payment',
+        success_url=request.build_absolute_uri(
+                reverse('main:paysuccess')
+            ) + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url=request.build_absolute_uri(reverse('main:paycancel')),
+    )
+
+    return JsonResponse({'sessionId': checkout_session.id})
+
+
+class PaymentSuccessView(TemplateView):
+    template_name = "shop-templates/pay-success.html"
+
+
+class PaymentCancelView(TemplateView):
+    template_name = "shop-templates/pay-cancel.html"

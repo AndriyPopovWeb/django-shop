@@ -13,8 +13,10 @@ urlpatterns = [
     path('product-amount/<int:id>', product_amount_controller, name='productamount'),
     path('get-product/<int:id>', get_product_controller, name='productamount'),
     path('cart', cart_controller, name='cart'),
-    # pay
-    path('get-signature', get_signature_controller, name='signature'),
+    # payments
+    path('create-checkout-session/', create_checkout_session),
+    path('pay-success/', PaymentSuccessView.as_view(), name='paysuccess'),
+    path('pay-cancel/', PaymentCancelView.as_view(), name='paycancel'),
     # account-paths
     path('account/login', LoginView.as_view(), name='login'),
     path('account/registration', RegistrationView.as_view(), name='registration'),
