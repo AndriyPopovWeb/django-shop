@@ -56,14 +56,48 @@
                         <div class="col-md-3">
                             <img src="${data['imageURL']}" class="img-fluid rounded-start" alt="${data['name']}" style="max-height: 150px;">
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">${data['name']}</h5>
+                                <span class="card-text">
+                                    <input class="amount" type="number" min="1" max="100" value="${cartObj[key]}" data-id="${key}"/>
+                                </span>
                             </div>
                         </div>
+                        <button type="button" class="btn-close col-md-1 delItem" data-id="${key}" aria-label="Close"></button>
+                        <input type="hidden" id="price${key}" value="${data['price']}" />
                     </div>
                 </div>`;
                 document.getElementById('cost').innerHTML = `${cost} &#8372;`;
+                const amounts = document.getElementsByClassName('amount');
+                for (const elem of amounts) {
+                    let id = elem.dataset.id;
+                    elem.addEventListener("click", (event) => {
+                        const cartObj = JSON.parse(localStorage.getItem('cart'));
+                        cartObj[id] = Number(event.target.value);
+                        localStorage.setItem('cart', JSON.stringify(cartObj));
+                        let cost = 0;
+                        for (const id in cartObj) {
+                            cost += cartObj[id] * document.getElementById(`price${id}`).value;
+                        }
+                        document.getElementById('cost').innerHTML = `${cost} &#8372;`;
+                    });
+                }
+                const delBtns = document.getElementsByClassName('delItem');
+                for (const elem of delBtns) {
+                    let id = elem.dataset.id;
+                    elem.addEventListener("click", (event) => {
+                        const cartObj = JSON.parse(localStorage.getItem('cart'));
+                        delete cartObj[id];
+                        localStorage.setItem('cart', JSON.stringify(cartObj));
+                        let cost = 0;
+                        for (const id in cartObj) {
+                            cost += cartObj[id] * document.getElementById(`price${id}`).value;
+                        }
+                        document.getElementById('cost').innerHTML = `${cost} &#8372;`;
+                        elem.parentElement.parentElement.remove();
+                    });
+                }
             });
     }
     container.innerHTML += `</div>`;
