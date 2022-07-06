@@ -81,6 +81,9 @@
                             cost += cartObj[id] * document.getElementById(`price${id}`).value;
                         }
                         document.getElementById('cost').innerHTML = `${cost} &#8372;`;
+                        document.getElementById('productCount').innerHTML =
+                            Object.values(JSON.parse(localStorage.getItem('cart')))
+                            .reduce((total, item) => total + item);
                     });
                 }
                 const delBtns = document.getElementsByClassName('delItem');
@@ -96,6 +99,9 @@
                         }
                         document.getElementById('cost').innerHTML = `${cost} &#8372;`;
                         elem.parentElement.parentElement.remove();
+                        document.getElementById('productCount').innerHTML =
+                            Object.values(JSON.parse(localStorage.getItem('cart')))
+                            .reduce((total, item) => total + item, 0);
                     });
                 }
             });

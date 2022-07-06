@@ -165,6 +165,14 @@ def create_checkout_session(request):
 class PaymentSuccessView(TemplateView):
     template_name = "shop-templates/pay-success.html"
 
+    @add_categories
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {**request.data})
+
 
 class PaymentCancelView(TemplateView):
     template_name = "shop-templates/pay-cancel.html"
+
+    @add_categories
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {**request.data})

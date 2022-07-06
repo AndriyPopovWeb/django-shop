@@ -94,6 +94,9 @@
         if (cart[productId]) cart[productId]++;
         else cart[productId] = 1;
         localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('productCount').innerHTML =
+            Object.values(JSON.parse(localStorage.getItem('cart')))
+            .reduce((total, item) => total + item, 0);
     });
 </script>
 {% endblock content %}
