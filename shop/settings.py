@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-qo@x8gs7b-jwyb^4#)m1_z2@#zhnjus)jdynfqddn1a&2-jl&9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 
 
 # Application definition
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'shop.urls'
@@ -134,6 +137,21 @@ MEDIA_URL = '/media/'
 
 # Stripe keys
 
-STRIPE_PUBLISHABLE_KEY = ''
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51LEXE5H7ocG1dPOAmkFfDQN0moGxeXVVfAFeTMnl2ClH38MztXTFYDFzHbOos3w5Z9FipMOhk0k1udLEESJzzWyW00mNqy0QCf'
 
-STRIPE_SECRET_KEY = ''
+STRIPE_SECRET_KEY = 'sk_test_51LEXE5H7ocG1dPOAfoWP2NqNdXTDY3mS92RQV69ODhqgv0TA41XdY81ls58lekCkilEw7REJM2ysKei17jNAXNny00VETosPEs'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    path.join(BASE_DIR, 'static'),
+)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
