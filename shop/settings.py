@@ -137,9 +137,9 @@ MEDIA_URL = '/media/'
 
 # Stripe keys
 
-STRIPE_PUBLISHABLE_KEY = ''
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51LEXE5H7ocG1dPOAmkFfDQN0moGxeXVVfAFeTMnl2ClH38MztXTFYDFzHbOos3w5Z9FipMOhk0k1udLEESJzzWyW00mNqy0QCf'
 
-STRIPE_SECRET_KEY = ''
+STRIPE_SECRET_KEY = 'sk_test_51LEXE5H7ocG1dPOAfoWP2NqNdXTDY3mS92RQV69ODhqgv0TA41XdY81ls58lekCkilEw7REJM2ysKei17jNAXNny00VETosPEs'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
