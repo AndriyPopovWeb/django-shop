@@ -137,9 +137,9 @@ MEDIA_URL = '/media/'
 
 # Stripe keys
 
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51LEXE5H7ocG1dPOAmkFfDQN0moGxeXVVfAFeTMnl2ClH38MztXTFYDFzHbOos3w5Z9FipMOhk0k1udLEESJzzWyW00mNqy0QCf'
+STRIPE_PUBLISHABLE_KEY = ''
 
-STRIPE_SECRET_KEY = 'sk_test_51LEXE5H7ocG1dPOAfoWP2NqNdXTDY3mS92RQV69ODhqgv0TA41XdY81ls58lekCkilEw7REJM2ysKei17jNAXNny00VETosPEs'
+STRIPE_SECRET_KEY = ''
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
@@ -157,6 +157,6 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # imagekit.io
-IMAGEKIT_PRIVATE_KEY = 'private_2t7yMges4Wv/2IFWJF5omLiaJGk='
-IMAGEKIT_PUBLIC_KEY = 'public_jLnsrmRMTR4pMWeX/vkzre5/G1k='
-IMAGEKIT_URL_ENDPOINT = 'https://ik.imagekit.io/ejhakgygh/'
+IMAGEKIT_PRIVATE_KEY = ''
+IMAGEKIT_PUBLIC_KEY = ''
+IMAGEKIT_URL_ENDPOINT = ''
