@@ -155,3 +155,8 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# imagekit.io
+IMAGEKIT_PRIVATE_KEY = 'private_2t7yMges4Wv/2IFWJF5omLiaJGk='
+IMAGEKIT_PUBLIC_KEY = 'public_jLnsrmRMTR4pMWeX/vkzre5/G1k='
+IMAGEKIT_URL_ENDPOINT = 'https://ik.imagekit.io/ejhakgygh/'

@@ -4,9 +4,9 @@ from .models import Image, Category, Product, Response
 
 # Register your models here.
 class ImageAdmin(admin.ModelAdmin):
-    fields = ['image_to_show', 'image']
+    fields = ['image_to_show', 'image', 'url']
     list_display = ['image_to_show']
-    readonly_fields = ['image_to_show']
+    readonly_fields = ['image_to_show', 'url']
 
 
 class CategoryAdmin(admin.ModelAdmin):

@@ -123,7 +123,7 @@ def get_product_controller(request, id):
     return JsonResponse({
         'name': result.name,
         'price': result.price,
-        'imageURL': result.images.all()[0].image.url
+        'imageURL': result.images.all()[0].url
     })
 
 
